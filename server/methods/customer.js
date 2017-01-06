@@ -1,4 +1,4 @@
-// import {Customer} from '/lib/collections';
+import {Wishlists} from '/lib/collections';
 import {Meteor} from 'meteor/meteor';
 import {check} from 'meteor/check';
 
@@ -11,6 +11,9 @@ export default function () {
       }
 
       return Meteor.call('wishlist.create', { name: wishlistName, customerId });
+    },
+    'customer.getWishlist'(wishlistId) {
+      return Wishlists.find({ customerId: this.userId, _id: wishlistId }).fetch();
     }
   });
 }

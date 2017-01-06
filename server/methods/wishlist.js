@@ -16,5 +16,8 @@ export default function () {
 
       return Wishlists.findOne(id);
     },
+    'wishlist.remove'(wishlistId) {
+      Wishlists.remove(wishlistId);
+    }
   });
 }

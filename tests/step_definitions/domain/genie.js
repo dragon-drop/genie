@@ -33,6 +33,10 @@ module.exports = function() {
     }
   });
 
+  this.When(/^I remove the wishlist$/, function () {
+     server.call('wishlist.remove', this.wishlist.id);
+   });
+
   this.Then(/^I have a wishlist on my account with name "([^"]*)"$/, function (name) {
     expect(this.wishlist.customerId).toBe(this.userId);
     expect(this.wishlist.name).toBe(name);
@@ -41,4 +45,10 @@ module.exports = function() {
   this.Then(/^I am notified I am not authenticated$/, function () {
     expect(this.error.error).toBe('AUTH');
   });
+
+  this.Then(/^I do not have the wishlist$/, function () {
+     const wishlist = server.call('customer.getWishlist', this.wishlist.id);
+
+     expect(wishlist.id).toBe(undefined);
+   });
 };

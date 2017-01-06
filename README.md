@@ -5,5 +5,5 @@
 
 * Run the app `npm start`
 * watch for acceptance and unit tests `npm run test`
-* run all acceptance tests `npm run at`
+* run all acceptance tests `npm run at-all`
 * run unit tests only `npm run ut-only`
