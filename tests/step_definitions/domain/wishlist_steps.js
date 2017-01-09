@@ -22,8 +22,10 @@ module.exports = function() {
    });
 
    this.When(/^I add a sku with id "([^"]*)" to the wishlist$/, function (skuId) {
+     const wishlistId = typeof this.wishlist !== 'undefined' ? this.wishlist._id : undefined;
+
      try {
-       server.call('wishlist.addSku', this.wishlist._id, skuId);
+       server.call('wishlist.addSku', wishlistId, skuId);
      } catch (error) {
        this.error = error;
      }

@@ -24,6 +24,6 @@ module.exports = function() {
   });
 
   this.When(/^I am notified about a "([^"]*)" error$/, function (error) {
-    expect(this.error.error).toBe(error);
+    expect(this.error.error.toString()).toBe(error);
   });
 };

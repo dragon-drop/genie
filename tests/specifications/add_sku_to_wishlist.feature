@@ -18,10 +18,15 @@ Feature: Add sku to wishlist
     Then the wishlist does not contain sku id "456"
     And I am notified about a "AUTH" error
 
-  @focus
   Scenario: I try and add to wishlist without a sku
     Given I have an account with email "adam@dragondrop.uk" and password "pope-shit"
     And I am logged in
     And I create a wishlist with name "My list"
     When I add to the wishlist without a sku
-    And I am notified about a "WISHLIST" error
+    And I am notified about a "400" error
+
+  Scenario: I try and add to an invalid wishlist
+    Given I have an account with email "adam@dragondrop.uk" and password "pope-shit"
+    And I am logged in
+    When I add a sku with id "456" to the wishlist
+    And I am notified about a "400" error

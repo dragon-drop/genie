@@ -17,6 +17,8 @@ export default function () {
       return Wishlists.findOne(id);
     },
     'wishlist.remove'(wishlistId) {
+      check(wishlistId, String);
+
       const wishlist = Wishlists.findOne(wishlistId);
 
       if (this.userId !== wishlist.customerId) {
@@ -26,12 +28,13 @@ export default function () {
       Wishlists.remove(wishlistId);
     },
     'wishlist.get'(wishlistId) {
+      check(wishlistId, String);
+
       return Wishlists.findOne(wishlistId);
     },
     'wishlist.addSku'(wishlistId, skuId) {
-      if (typeof skuId === 'undefined') {
-        throw new Meteor.Error('WISHLIST', 'skuId is undefined');
-      }
+      check(wishlistId, String);
+      check(skuId, String);
 
       const wishlist = Wishlists.findOne(wishlistId);
 
