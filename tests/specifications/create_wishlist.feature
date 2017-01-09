@@ -1,5 +1,5 @@
 Feature: Create a Wishlist
-  As a 
+  As a
   I want to
   So that
 
@@ -12,4 +12,4 @@ Feature: Create a Wishlist
   Scenario: I am not logged in
     Given I am not logged in
     When I create a wishlist with name "My list"
-    Then I am notified I am not authenticated
+    Then I am notified about a "AUTH" error

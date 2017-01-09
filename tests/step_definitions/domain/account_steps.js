@@ -23,7 +23,7 @@ module.exports = function() {
     server.call('login', { user: { email }, password });
   });
 
-  this.Then(/^I am notified I am not authenticated$/, function () {
-    expect(this.error.error).toBe('AUTH');
+  this.When(/^I am notified about a "([^"]*)" error$/, function (error) {
+    expect(this.error.error).toBe(error);
   });
 };

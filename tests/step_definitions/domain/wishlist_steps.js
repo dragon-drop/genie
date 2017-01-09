@@ -37,6 +37,14 @@ module.exports = function() {
       }
     });
 
+    this.When(/^I add to the wishlist without a sku$/, function () {
+      try {
+        server.call('wishlist.addSku', this.wishlist._id);
+      } catch (error) {
+        this.error = error;
+      }
+     });
+
    this.Then(/^I have a wishlist on my account with name "([^"]*)"$/, function (name) {
      expect(this.wishlist.customerId).toBe(this.userId);
      expect(this.wishlist.name).toBe(name);

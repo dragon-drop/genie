@@ -29,8 +29,12 @@ export default function () {
       return Wishlists.findOne(wishlistId);
     },
     'wishlist.addSku'(wishlistId, skuId) {
+      if (typeof skuId === 'undefined') {
+        throw new Meteor.Error('WISHLIST', 'skuId is undefined');
+      }
+
       const wishlist = Wishlists.findOne(wishlistId);
-      
+
       if (this.userId !== wishlist.customerId) {
         throw new Meteor.Error('AUTH', 'this.userId is not the wishlist.customerId');
       }

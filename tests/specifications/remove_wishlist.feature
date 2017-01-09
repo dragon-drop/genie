@@ -16,4 +16,4 @@ Feature: Remove a Wishlist
     And I am logged in
     When I remove the wishlist
     Then the wishlist is not removed
-    And I am notified I am not authenticated
+    And I am notified about a "AUTH" error
