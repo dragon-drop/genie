@@ -43,6 +43,14 @@ module.exports = function() {
     }
   });
 
+  this.When(/^I add a sku with id "([^"]*)" to the wishlist$/, function (skuId) {
+    try {
+      server.call('wishlist.addSku', this.wishlist._id, skuId);
+    } catch (error) {
+      this.error = error;
+    }
+   });
+
   this.When(/^I remove the wishlist$/, function () {
      try {
        server.call('wishlist.remove', this.wishlist._id);
@@ -70,5 +78,17 @@ module.exports = function() {
      const wishlist = server.call('wishlist.get', this.wishlist._id);
 
      expect(wishlist._id).not.toBe(undefined);
+   });
+
+   this.Then(/^the wishlist contains sku id "([^"]*)"$/, function (skuId) {
+     const wishlist = server.call('wishlist.get', this.wishlist._id);
+
+     expect(wishlist.skus.indexOf(skuId)).not.toBe(-1);
+   });
+
+   this.Then(/^the wishlist does not contain sku id "([^"]*)"$/, function (skuId) {
+     const wishlist = server.call('wishlist.get', this.wishlist._id);
+
+     expect(wishlist.skus.indexOf(skuId)).toBe(-1);
    });
 };

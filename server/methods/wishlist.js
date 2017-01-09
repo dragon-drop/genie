@@ -27,6 +27,21 @@ export default function () {
     },
     'wishlist.get'(wishlistId) {
       return Wishlists.findOne(wishlistId);
+    },
+    'wishlist.addSku'(wishlistId, skuId) {
+      const wishlist = Wishlists.findOne(wishlistId);
+      
+      if (this.userId !== wishlist.customerId) {
+        throw new Meteor.Error('AUTH', 'this.userId is not the wishlist.customerId');
+      }
+
+      return Wishlists.update({
+        _id: wishlistId,
+      }, {
+        $addToSet: {
+          skus: skuId
+        }
+      });
     }
   });
 }
