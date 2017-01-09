@@ -17,6 +17,17 @@ module.exports = function() {
 
   });
 
+  this.Given(/^a wishlist has been created with name "([^"]*)" and is owned by "([^"]*)"$/, function (name, email) {
+    const password = "password";
+
+    const userId = server.call('users.create', {email, password});
+    server.call('login', { user: { email }, password });
+
+    this.wishlist = server.call('customer.createWishlist', name);
+
+    server.call('logout');
+   });
+
   this.Given(/^I am logged in$/, function () {
     const {email, password} = this;
     server.call('login', { user: { email }, password });
@@ -27,14 +38,17 @@ module.exports = function() {
 
     try {
       this.wishlist = server.call('customer.createWishlist', name);
-      console.log('inside try', wishlist);
     } catch (error) {
       this.error = error;
     }
   });
 
   this.When(/^I remove the wishlist$/, function () {
-     server.call('wishlist.remove', this.wishlist.id);
+     try {
+       server.call('wishlist.remove', this.wishlist._id);
+     } catch (error) {
+       this.error = error;
+     }
    });
 
   this.Then(/^I have a wishlist on my account with name "([^"]*)"$/, function (name) {
@@ -47,8 +61,14 @@ module.exports = function() {
   });
 
   this.Then(/^I do not have the wishlist$/, function () {
-     const wishlist = server.call('customer.getWishlist', this.wishlist.id);
+     const wishlist = server.call('customer.getWishlist', this.wishlist._id);
 
-     expect(wishlist.id).toBe(undefined);
+     expect(wishlist._id).toBe(undefined);
+   });
+
+   this.Then(/^the wishlist is not removed$/, function () {
+     const wishlist = server.call('wishlist.get', this.wishlist._id);
+
+     expect(wishlist._id).not.toBe(undefined);
    });
 };

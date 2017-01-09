@@ -17,7 +17,16 @@ export default function () {
       return Wishlists.findOne(id);
     },
     'wishlist.remove'(wishlistId) {
+      const wishlist = Wishlists.findOne(wishlistId);
+
+      if (this.userId !== wishlist.customerId) {
+        throw new Meteor.Error('AUTH', 'this.userId is not the wishlist.customerId');
+      }
+
       Wishlists.remove(wishlistId);
+    },
+    'wishlist.get'(wishlistId) {
+      return Wishlists.findOne(wishlistId);
     }
   });
 }
