@@ -23,7 +23,7 @@ module.exports = function() {
     server.call('login', { user: { email }, password });
   });
 
-  this.When(/^I am notified about a "([^"]*)" error$/, function (error) {
+  this.Then(/^I am notified about a "([^"]*)" error$/, function (error) {
     expect(this.error.error.toString()).toBe(error);
   });
 };
