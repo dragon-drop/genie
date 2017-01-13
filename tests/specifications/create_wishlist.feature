@@ -3,6 +3,7 @@ Feature: Create a Wishlist
   I want to
   So that
 
+  @e2e
   Scenario: I am logged in
     Given I have an account with email "adam@dragondrop.uk" and password "pope-shit"
     And I am logged in
