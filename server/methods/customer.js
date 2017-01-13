@@ -16,9 +16,17 @@ export default function () {
     'customer.getWishlist'(wishlistId) {
       check(wishlistId, String);
 
+      if (!this.userId) {
+        throw new Meteor.Error('AUTH', 'this.userId is null');
+      }
+      
       return Wishlists.find({ customerId: this.userId, _id: wishlistId }).fetch();
     },
     'customer.getWishlists'() {
+      if (!this.userId) {
+        throw new Meteor.Error('AUTH', 'this.userId is null');
+      }
+
       return Wishlists.find({ customerId: this.userId }).fetch();
     }
   });

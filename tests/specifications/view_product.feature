@@ -3,7 +3,6 @@ Feature: View product
   I want to
   So that
 
-  @focus
   Scenario: I am logged in
     Given I have an account with email "adam@dragondrop.uk" and password "pope-shit"
     And I am logged in
@@ -14,7 +13,6 @@ Feature: View product
     Then I get the product with id "XYZ" with skus "123, 456"
     And I get wishlists named "My List 1, My List 2"
 
-  @focus
   Scenario: I am not logged in
     Given I am not logged in
     And there is a product with id "XYZ" with skus "123, 456"
