@@ -1,6 +1,6 @@
-import {Products, Wishlists, Skus} from '/lib/collections';
-import {Meteor} from 'meteor/meteor';
-import {check} from 'meteor/check';
+import { Products, Wishlists, Skus } from '/lib/collections';
+import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
 
 export default function () {
   Meteor.methods({
@@ -16,7 +16,7 @@ export default function () {
       return Meteor.call('product.get', product._id);
     },
     'product.get'(productId) {
-      return Products.findOne(productId)
+      return Products.findOne(productId);
     },
     'product.view'(productId) {
       check(productId, String);

@@ -1,7 +1,7 @@
-const {describe, it} = global;
-import {expect} from 'chai';
-import {stub, spy} from 'sinon';
-import {composer} from '../new_wishlist';
+const { describe, it } = global;
+import { expect } from 'chai';
+import { stub, spy } from 'sinon';
+import { composer } from '../new_wishlist';
 
 describe('core.containers.new_wishlist', () => {
   describe('composer', () => {

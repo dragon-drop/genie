@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  
-  handleSubmit(event) { 
+
+  handleSubmit(event) {
     event.preventDefault();
     const { email, password } = event.target;
 
     this.props.loginWithPassword(email.value, password.value);
- }
+  }
 
   render() {
     return (
@@ -25,5 +25,9 @@ class Login extends React.Component {
     );
   }
 }
+
+Login.propTypes = {
+  loginWithPassword: PropTypes.func.isRequired,
+};
 
 export default Login;

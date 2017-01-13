@@ -1,12 +1,12 @@
 import React from 'react';
-import {mount} from 'react-mounter';
+import { mount } from 'react-mounter';
 
 import MainLayout from './components/main_layout.jsx';
 import Home from './components/home.jsx';
 import NewWishlist from './containers/new_wishlist';
 import WishlistIndex from './containers/wishlist_index';
 
-export default function (injectDeps, {FlowRouter}) {
+export default function (injectDeps, { FlowRouter }) {
   const MainLayoutCtx = injectDeps(MainLayout);
 
   FlowRouter.route('/', {

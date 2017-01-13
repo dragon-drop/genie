@@ -1,6 +1,6 @@
-import {Wishlists} from '/lib/collections';
-import {Meteor} from 'meteor/meteor';
-import {check} from 'meteor/check';
+import { Wishlists } from '/lib/collections';
+import { Meteor } from 'meteor/meteor';
+import { check } from 'meteor/check';
 
 export default function () {
   Meteor.methods({
@@ -19,7 +19,7 @@ export default function () {
       if (!this.userId) {
         throw new Meteor.Error('AUTH', 'this.userId is null');
       }
-      
+
       return Wishlists.find({ customerId: this.userId, _id: wishlistId }).fetch();
     },
     'customer.getWishlists'() {

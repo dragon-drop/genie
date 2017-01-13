@@ -1,9 +1,9 @@
-import {useDeps, composeAll, composeWithTracker, compose} from 'mantra-core';
+import { useDeps, composeAll, composeWithTracker, compose } from 'mantra-core';
 
 import NewWishlist from '../components/new_wishlist.jsx';
 
-export const composer = ({context}, onData) => {
-  const {Meteor, Collections} = context();
+export const composer = ({ context }, onData) => {
+  const { Meteor, Collections } = context();
 
   onData(null, {});
 };
