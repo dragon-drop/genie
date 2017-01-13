@@ -75,4 +75,12 @@ module.exports = function() {
 
       expect(wishlist.skus.indexOf(skuId)).toBe(-1);
     });
+
+    this.Then(/^I get wishlists named "([^"]*)"$/, function (wishlistsString) {
+      const wishlistNames = wishlistsString.split(', ').map((wishlistName) =>  wishlistName.trim());
+
+      wishlistNames.forEach((wishlistName, index) => {
+        expect(this.wishlists[index].name).toBe(wishlistName);
+      });
+    });
 };

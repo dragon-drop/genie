@@ -17,6 +17,9 @@ export default function () {
       check(wishlistId, String);
 
       return Wishlists.find({ customerId: this.userId, _id: wishlistId }).fetch();
+    },
+    'customer.getWishlists'() {
+      return Wishlists.find({ customerId: this.userId }).fetch();
     }
   });
 }
