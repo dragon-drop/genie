@@ -9,7 +9,8 @@ export const composer = ({ context }, onData) => {
 };
 
 export const depsMapper = (context, actions) => ({
-  context: () => context
+  createWishlist: actions.wishlist.createWishlist,
+  context: () => context,
 });
 
 export default composeAll(

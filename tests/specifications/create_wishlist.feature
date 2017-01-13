@@ -3,11 +3,11 @@ Feature: Create a Wishlist
   I want to
   So that
 
-  @e2e @focus
+  @e2e
   Scenario: I am logged in
     Given I have an account with email "adam@dragondrop.uk" and password "pope-shit"
-    And I am logged in
-    When I create a wishlist with name "My list"
+    When I am logged in
+    And I create a wishlist with name "My list"
     Then I have a wishlist on my account with name "My list"
 
   Scenario: I am not logged in
