@@ -32,9 +32,14 @@ export default function () {
 
       return Wishlists.findOne(wishlistId);
     },
-    'wishlist.addSku'(wishlistId, skuId) {
+    'wishlist.view'(wishlistId) {
       check(wishlistId, String);
-      check(skuId, String);
+
+      return Wishlists.findOne(wishlistId);
+    },
+    'wishlist.addSku'(wishlistId, sku) {
+      check(wishlistId, String);
+      check(sku, Object);
 
       const wishlist = Wishlists.findOne(wishlistId);
 
@@ -46,7 +51,7 @@ export default function () {
         _id: wishlistId,
       }, {
         $addToSet: {
-          skus: skuId
+          skus: sku
         }
       });
     }

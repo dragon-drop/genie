@@ -18,7 +18,7 @@ module.exports = function() {
        const { product, wishlists } = server.call('product.view', productId);
        this.product = product;
        this.wishlists = wishlists;
-       
+
      } catch (error) {
        this.error = error;
      }

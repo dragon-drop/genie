@@ -7,15 +7,17 @@ export default function () {
     'product.create'(product) {
       check(product, Object);
 
-      Products.insert(product);
-
       product.skus.forEach((sku) => {
         Skus.insert(Object.assign(sku, { productId: product._id }));
       });
 
+      Products.insert(product);
+
       return Meteor.call('product.get', product._id);
     },
     'product.get'(productId) {
+      check(productId, String);
+
       return Products.findOne(productId);
     },
     'product.view'(productId) {
