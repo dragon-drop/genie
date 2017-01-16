@@ -10,11 +10,20 @@ class ShowProduct extends React.Component {
     event.preventDefault();
     const { skuId, wishlistId } = event.target;
 
-    this.props.addSkuToWishlist(skuId.value, wishlistId.value);
+    let sku;
+
+    this.props.product.skus.forEach((productSku) => {
+      if (productSku._id === skuId.value) {
+        sku = productSku;
+      }
+    });
+
+    this.props.addSkuToWishlist(sku, wishlistId.value);
   }
 
   render() {
     const product = this.props.product;
+    console.log(product);
     const { skus } = product;
     const wishlists = this.props.wishlists;
 

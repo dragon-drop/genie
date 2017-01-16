@@ -5,6 +5,7 @@ import MainLayout from './components/main_layout.jsx';
 import Home from './components/home.jsx';
 import NewWishlist from './containers/new_wishlist';
 import WishlistIndex from './containers/wishlist_index';
+import ShowWishlist from './containers/show_wishlist';
 
 export default function (injectDeps, { FlowRouter }) {
   const MainLayoutCtx = injectDeps(MainLayout);
@@ -32,6 +33,15 @@ export default function (injectDeps, { FlowRouter }) {
     action() {
       mount(MainLayoutCtx, {
         content: () => (<WishlistIndex />)
+      });
+    }
+  });
+
+  FlowRouter.route('/wishlists/:id', {
+    name: 'wishlists.show',
+    action() {
+      mount(MainLayoutCtx, {
+        content: () => (<ShowWishlist />)
       });
     }
   });
