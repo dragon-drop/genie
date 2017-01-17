@@ -20,6 +20,9 @@ export default function () {
     'customer.getCurrent'(retailerId) {
       return Customers.findOne({ userId: this.userId, retailerId });
     },
+    'customer.getAll'() {
+      return Customers.find({}).fetch();
+    },
     'customer.createWishlist'(name, retailerId) {
       check(name, String);
       check(retailerId, String);
