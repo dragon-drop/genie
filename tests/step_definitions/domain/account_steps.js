@@ -4,17 +4,12 @@ module.exports = function() {
     server.call('logout');
   });
 
-  this.Given(/^I have an account with email "([^"]*)" and password "([^"]*)"$/, function (email, password) {
-    //SETUP
-    const getUser = () => {
-      return Meteor.user();
-    };
-
+  this.Given(/^I have an account with email "([^"]*)" and password "([^"]*)" for retailer "([^"]*)"$/, function (email, password, retailerId) {
     this.email = email;
     this.password = password;
-    const userId = server.call('users.create', {email, password});
-    this.userId = userId;
 
+    const userId = server.call('users.create', { email, password });
+    const customerId = server.call('customer.create', userId, retailerId);
   });
 
   this.Given(/^I am logged in$/, function () {

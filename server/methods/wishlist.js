@@ -4,13 +4,15 @@ import { check } from 'meteor/check';
 
 export default function () {
   Meteor.methods({
-    'wishlist.create'({ name, customerId }) {
+    'wishlist.create'({ name, customerId, retailerId }) {
       check(name, String);
       check(customerId, String);
+      check(retailerId, String);
 
       const id = Wishlists.insert({
         name,
         customerId,
+        retailerId,
         skus: [],
       });
 
@@ -43,8 +45,11 @@ export default function () {
 
       const wishlist = Wishlists.findOne(wishlistId);
 
-      if (this.userId !== wishlist.customerId) {
-        throw new Meteor.Error('AUTH', 'this.userId is not the wishlist.customerId');
+      const customer = Meteor.call('customer.getCurrent', wishlist.retailerId);
+      const customerId = customer._id;
+
+      if (customerId !== wishlist.customerId) {
+        throw new Meteor.Error('AUTH', 'customerId is not the wishlist.customerId');
       }
 
       return Wishlists.update({

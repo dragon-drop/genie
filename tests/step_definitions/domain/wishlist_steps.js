@@ -16,13 +16,15 @@ function findSkuInCollection(testSku, collection) {
 }
 
 module.exports = function () {
-  this.Given(/^a wishlist has been created with name "([^"]*)" and is owned by "([^"]*)"$/, function (name, email) {
+  this.Given(/^a wishlist has been created for retailer "([^"]*)" with name "([^"]*)" and is owned by "([^"]*)"$/, function (retailerId, name, email) {
     const password = "password";
 
     const userId = server.call('users.create', {
       email,
       password
     });
+
+    server.call('customer.create', userId, retailerId);
 
     server.call('login', {
       user: {
@@ -31,25 +33,25 @@ module.exports = function () {
       password
     });
 
-    this.wishlist = server.call('customer.createWishlist', name);
+    this.wishlist = server.call('customer.createWishlist', name, retailerId);
 
     server.call('logout');
   });
 
-  this.When(/^I create a wishlist with name "([^"]*)"$/, function (name) {
+  this.When(/^I create a wishlist with name "([^"]*)" for retailer "([^"]*)"$/, function (name, retailerId) {
     this.user = server.execute(() => Meteor.user());
 
     try {
-      this.wishlist = server.call('customer.createWishlist', name);
+      this.wishlist = server.call('customer.createWishlist', name, retailerId);
     } catch (error) {
       this.error = error;
     }
   });
 
-  this.When(/^I add a sku with id "([^"]*)" from product "([^"]*)" to the wishlist$/, function (skuId, productId) {
+  this.When(/^I add a sku with id "([^"]*)" from product "([^"]*)" to the wishlist for retailer "([^"]*)"$/, function (skuId, productId, retailerId) {
     const wishlistId = typeof this.wishlist !== 'undefined' ? this.wishlist._id : undefined;
 
-    const product = server.call('product.get', productId);
+    const product = server.call('product.get', retailerId, productId);
 
     let sku;
 
@@ -86,13 +88,23 @@ module.exports = function () {
     this.viewWishlistResponse = server.call('wishlist.view', this.wishlist._id);
   });
 
-  this.Then(/^I have a wishlist on my account with name "([^"]*)"$/, function (name) {
-    expect(this.wishlist.customerId).toBe(this.userId);
+  this.Then(/^I have a wishlist on my "([^"]*)" account with name "([^"]*)"$/, function (retailerId, name) {
+    const customer = server.call('customer.getCurrent', retailerId);
+    const customerId = customer._id;
+
+    expect(this.wishlist.customerId).toBe(customerId);
     expect(this.wishlist.name).toBe(name);
+    expect(this.wishlist.retailerId).toBe(retailerId);
   });
 
-  this.Then(/^I do not have the wishlist$/, function () {
-    const wishlist = server.call('customer.getWishlist', this.wishlist._id);
+  this.Then(/^I do not have a wishlist on my "([^"]*)" account with name "([^"]*)"$/, function (retailerId, name) {
+    const wishlist = server.call('customer.getWishlistByName', name, retailerId);
+
+    expect(wishlist._id).toBe(undefined);
+  });
+
+  this.Then(/^I do not have the wishlist with name "([^"]*)" for retailer "([^"]*)"$/, function (name, retailerId) {
+    const wishlist = server.call('customer.getWishlistByName', name, retailerId);
 
     expect(wishlist._id).toBe(undefined);
   });
@@ -109,11 +121,12 @@ module.exports = function () {
     expect(wishlist.skus.indexOf(skuId)).toBe(-1);
   });
 
-  this.Then(/^I get wishlists named "([^"]*)"$/, function (wishlistsString) {
+  this.Then(/^I get wishlists named "([^"]*)" for retailer "([^"]*)"$/, function (wishlistsString, retailerId) {
     const wishlistNames = wishlistsString.split(', ').map((wishlistName) => wishlistName.trim());
 
     wishlistNames.forEach((wishlistName, index) => {
       expect(this.wishlists[index].name).toBe(wishlistName);
+      expect(this.wishlists[index].retailerId).toBe(retailerId);
     });
   });
 
