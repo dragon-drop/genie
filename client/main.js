@@ -5,6 +5,7 @@ import initContext from './configs/context';
 import coreModule from './modules/core';
 import accountsModule from './modules/accounts';
 import productsModule from './modules/products';
+import retailersModule from './modules/retailers';
 
 // init context
 const context = initContext();
@@ -14,4 +15,5 @@ const app = createApp(context);
 app.loadModule(coreModule);
 app.loadModule(accountsModule);
 app.loadModule(productsModule);
+app.loadModule(retailersModule);
 app.init();

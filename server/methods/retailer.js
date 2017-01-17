@@ -15,6 +15,9 @@ export default function () {
       check(retailerId, String);
 
       return Retailers.findOne(retailerId);
+    },
+    'retailer.getAll'() {
+      return Retailers.find({}).fetch();
     }
   });
 }
