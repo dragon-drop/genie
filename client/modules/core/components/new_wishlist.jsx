@@ -10,7 +10,7 @@ class NewWishlist extends React.Component {
     event.preventDefault();
     const { name } = event.target;
 
-    this.props.createWishlist(name.value);
+    this.props.createWishlist(name.value, this.props.retailerId);
   }
 
   render() {

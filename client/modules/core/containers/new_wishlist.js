@@ -3,9 +3,11 @@ import { useDeps, composeAll, composeWithTracker, compose } from 'mantra-core';
 import NewWishlist from '../components/new_wishlist.jsx';
 
 export const composer = ({ context }, onData) => {
-  const { Meteor, Collections } = context();
+  const { Meteor, Collections, FlowRouter } = context();
 
-  onData(null, {});
+  const retailerId = FlowRouter.getParam('retailerId');
+
+  onData(null, { retailerId });
 };
 
 export const depsMapper = (context, actions) => ({

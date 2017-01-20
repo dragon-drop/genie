@@ -1,6 +1,6 @@
 import { useDeps, composeAll, composeWithTracker } from 'mantra-core';
 
-import Login from '../components/login.jsx';
+import Register from '../components/register.jsx';
 
 export const composer = ({ context }, onData) => {
   const { Meteor, Collections, FlowRouter } = context();
@@ -11,11 +11,11 @@ export const composer = ({ context }, onData) => {
 };
 
 export const depsMapper = (context, actions) => ({
-  loginWithPassword: actions.login.loginWithPassword,
+  registerWithPassword: actions.register.registerWithPassword,
   context: () => context,
 });
 
 export default composeAll(
   composeWithTracker(composer),
   useDeps(depsMapper)
-)(Login);
+)(Register);

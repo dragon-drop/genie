@@ -27,7 +27,7 @@ class CustomerIndex extends React.Component {
         ))}
         </ul>
 
-        <a href="/customers/new">Add customer</a>
+        <a href="/app/customers/new">Add customer</a>
       </div>
     );
   }

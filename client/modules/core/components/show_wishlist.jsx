@@ -6,12 +6,12 @@ class ShowWishlist extends React.Component {
   }
 
   render() {
-    const wishlist = this.props.wishlist;
+    const { wishlist, retailerId } = this.props;
     const { skus } = wishlist;
 
     return (
       <div>
-        <a href="/wishlists">My Wishlists</a> / <span>{wishlist.name}</span>
+        <a href={`/${retailerId}/wishlists`}>My Wishlists</a> / <span>{wishlist.name}</span>
 
         <h1>{wishlist.name}</h1>
 

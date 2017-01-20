@@ -18,7 +18,8 @@ export default function () {
       return Customers.insert({ userId, retailerId });
     },
     'customer.getCurrent'(retailerId) {
-      return Customers.findOne({ userId: this.userId, retailerId });
+      const customer = Customers.findOne({ userId: this.userId, retailerId });
+      return customer;
     },
     'customer.getAll'() {
       return Customers.find({}).fetch();

@@ -15,12 +15,14 @@ class RetailerIndex extends React.Component {
         <ul>
         {retailers.map((retailer) => (
           <li key={retailer._id} className="retailer">
-            <h2>{retailer._id} - <span className="retailer__name">{retailer.name}</span></h2>
+            <a href={`/${retailer._id}`}>
+              <h2>{retailer._id} - <span className="retailer__name">{retailer.name}</span></h2>
+            </a>
           </li>
         ))}
         </ul>
 
-        <a href="/retailers/new">Add retailer</a>
+        <a href="/app/retailers/new">Add retailer</a>
       </div>
     );
   }

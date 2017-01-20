@@ -8,7 +8,7 @@ import NewCustomer from './containers/new_customer';
 export default function (injectDeps, {FlowRouter}) {
   const MainLayoutCtx = injectDeps(MainLayout);
 
-  FlowRouter.route('/customers', {
+  FlowRouter.route('/app/customers', {
     name: 'customers.index',
     action() {
       mount(MainLayoutCtx, {
@@ -17,7 +17,7 @@ export default function (injectDeps, {FlowRouter}) {
     }
   });
 
-  FlowRouter.route('/customers/new', {
+  FlowRouter.route('/app/customers/new', {
     name: 'customers.new',
     action() {
       mount(MainLayoutCtx, {

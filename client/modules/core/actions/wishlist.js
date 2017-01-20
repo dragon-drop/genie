@@ -1,22 +1,22 @@
 export default {
-    createWishlist({ Meteor, FlowRouter, LocalState}, name) {
-      Meteor.call('customer.createWishlist', name, (error, wishlist) => {
+    createWishlist({ Meteor, FlowRouter, LocalState}, name, retailerId) {
+      Meteor.call('customer.createWishlist', name, retailerId, (error, wishlist) => {
         if(error) {
           console.error(error);
           return LocalState.set('ERROR', error.reason);
         }
 
-        return FlowRouter.go('/wishlists');
+        return FlowRouter.go(`/${retailerId}/wishlists/${wishlist._id}`);
       })
     },
-    addSkuToWishlist({Meteor, FlowRouter, LocalState}, skuId, wishlistId) {
-      Meteor.call('wishlist.addSku', wishlistId, skuId, (error, wishlist) => {
+    addSkuToWishlist({Meteor, FlowRouter, LocalState}, skuId, wishlistId, retailerId) {
+      Meteor.call('wishlist.addSku', wishlistId, skuId, retailerId, (error, wishlist) => {
         if(error) {
           console.error(error);
           return LocalState.set('ERROR', error.reason);
         }
 
-        return FlowRouter.go('/wishlists');
+        return FlowRouter.go(`/${retailerId}/wishlists/${wishlistId}`);
       })
     }
 }

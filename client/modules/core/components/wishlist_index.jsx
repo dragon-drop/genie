@@ -6,7 +6,7 @@ class WishlistIndex extends React.Component {
   }
 
   render() {
-    const { wishlists } = this.props;
+    const { wishlists, retailerId } = this.props;
     const productsString = function (skus) {
       return `${skus.length} product${skus.length !== 1 ? 's' : ''}`;
     }
@@ -19,7 +19,7 @@ class WishlistIndex extends React.Component {
         {wishlists.map((wishlist) => (
           <li key={wishlist._id} className="wishlist">
             <h2>
-              <a href={`/wishlists/${wishlist._id}`}>
+              <a href={`/${retailerId}/wishlists/${wishlist._id}`}>
                 <span className="wishlist__name">{wishlist.name} </span>
                 <span>({productsString(wishlist.skus)})</span>
               </a>
@@ -28,7 +28,7 @@ class WishlistIndex extends React.Component {
         ))}
         </ul>
 
-        <a href="/wishlists/new">Add wishlist</a>
+        <a href={`/${retailerId}/wishlists/new`}>Add wishlist</a>
       </div>
     );
   }

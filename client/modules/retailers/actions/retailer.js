@@ -6,7 +6,7 @@ export default {
         return LocalState.set('ERROR', error.reason);
       }
 
-      return FlowRouter.go('/retailers');
+      return FlowRouter.go(`/${retailer._id}`);
     })
   },
 }

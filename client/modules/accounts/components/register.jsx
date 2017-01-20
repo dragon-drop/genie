@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-class Login extends React.Component {
+class Register extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -10,24 +10,20 @@ class Login extends React.Component {
     event.preventDefault();
     const { email, password } = event.target;
 
-    this.props.loginWithPassword(this.props.retailerId, email.value, password.value);
+    this.props.registerWithPassword(this.props.retailerId, email.value, password.value);
   }
 
   render() {
     return (
       <div>
-        <form id="loginForm" onSubmit={this.handleSubmit}>
+        <form id="registerForm" onSubmit={this.handleSubmit}>
           <input placeholder="email" type="email" name="email" />
           <input placeholder="Password" type="password" name="password" />
-          <button type="submit">Login</button>
+          <button type="submit">Register</button>
         </form>
       </div>
     );
   }
 }
 
-Login.propTypes = {
-  loginWithPassword: PropTypes.func.isRequired,
-};
-
-export default Login;
+export default Register;

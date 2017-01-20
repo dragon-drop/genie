@@ -6,15 +6,16 @@ export const composer = ({ context }, onData) => {
   const { Meteor, FlowRouter, Collections } = context();
 
   const productId = FlowRouter.getParam('id');
+  const retailerId = FlowRouter.getParam('retailerId');
 
-  Meteor.call('product.view', productId, (error, response) => {
+  Meteor.call('product.view', retailerId, productId, (error, response) => {
     if (error) {
       return console.error(error);
     }
 
     const { product, wishlists } = response;
 
-    onData(null, { product, wishlists });
+    onData(null, { product, wishlists, retailerId });
   });
 };
 

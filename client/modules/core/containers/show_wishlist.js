@@ -6,13 +6,14 @@ export const composer = ({context}, onData) => {
   const { Meteor, FlowRouter, Collections } = context();
 
   const wishlistId = FlowRouter.getParam('id');
+  const retailerId = FlowRouter.getParam('retailerId');
 
   Meteor.call('wishlist.view', wishlistId, (error, wishlist) => {
     if (error) {
       return console.error(error);
     }
 
-    onData(null, { wishlist });
+    onData(null, { wishlist, retailerId });
   });
 };
 

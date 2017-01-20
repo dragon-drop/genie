@@ -5,8 +5,8 @@ export default {
         console.error(error);
         return LocalState.set('ERROR', error.reason);
       }
-
-      return FlowRouter.go('/customers');
+      
+      return FlowRouter.go(`/${retailerId}/wishlists`);
     })
   },
 }

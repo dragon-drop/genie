@@ -7,7 +7,7 @@ import ShowProduct from './containers/show_product';
 export default function (injectDeps, {FlowRouter}) {
   const MainLayoutCtx = injectDeps(MainLayout);
 
-  FlowRouter.route('/products/:id', {
+  FlowRouter.route('/:retailerId/products/:id', {
     name: 'products.show',
     action() {
       mount(MainLayoutCtx, {

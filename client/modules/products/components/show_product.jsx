@@ -18,12 +18,11 @@ class ShowProduct extends React.Component {
       }
     });
 
-    this.props.addSkuToWishlist(sku, wishlistId.value);
+    this.props.addSkuToWishlist(sku, wishlistId.value, this.props.retailerId);
   }
 
   render() {
     const product = this.props.product;
-    console.log(product);
     const { skus } = product;
     const wishlists = this.props.wishlists;
 

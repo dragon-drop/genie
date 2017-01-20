@@ -19,7 +19,7 @@ export default function (injectDeps, { FlowRouter }) {
     }
   });
 
-  FlowRouter.route('/wishlists/new', {
+  FlowRouter.route('/:retailerId/wishlists/new', {
     name: 'wishlists.new',
     action() {
       mount(MainLayoutCtx, {
@@ -28,7 +28,7 @@ export default function (injectDeps, { FlowRouter }) {
     }
   });
 
-  FlowRouter.route('/wishlists', {
+  FlowRouter.route('/:retailerId/wishlists', {
     name: 'wishlists.index',
     action() {
       mount(MainLayoutCtx, {
@@ -37,7 +37,7 @@ export default function (injectDeps, { FlowRouter }) {
     }
   });
 
-  FlowRouter.route('/wishlists/:id', {
+  FlowRouter.route('/:retailerId/wishlists/:id', {
     name: 'wishlists.show',
     action() {
       mount(MainLayoutCtx, {
