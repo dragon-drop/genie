@@ -21,4 +21,16 @@ module.exports = function() {
   this.Then(/^I am notified about a "([^"]*)" error$/, function (error) {
     expect(this.error.error.toString()).toBe(error);
   });
+
+  this.Then(/^I get a "([^"]*)"$/, function (something) {
+    expect(this[something]).not.toBe(undefined);
+  });
+
+  this.Then(/^I get no "([^"]*)"$/, function (something) {
+    if (typeof this[something] === 'undefined') {
+      expect(this[something]).toBe(undefined);
+    } else {
+      expect(this[something].length).toBe(0);
+    }
+  });
 };

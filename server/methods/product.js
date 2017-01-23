@@ -23,17 +23,23 @@ export default function () {
     'product.view'(retailerId, productId) {
       check(productId, String);
 
-      if (!this.userId) {
-        throw new Meteor.Error('AUTH', 'this.userId is null');
-      }
+      let error;
 
       const product = Meteor.call('product.get', retailerId, productId);
-
       const wishlists = Meteor.call('customer.getWishlists', retailerId);
+      const user = Meteor.user() || undefined;
+      const customer = Meteor.call('customer.getCurrent', retailerId);
+
+      if (!this.userId) {
+        error = new Meteor.Error('AUTH', 'this.userId is null');
+      }
 
       return {
         product,
         wishlists,
+        user,
+        customer,
+        error,
       };
     }
   });

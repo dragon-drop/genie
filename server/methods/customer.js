@@ -5,11 +5,12 @@ import { check } from 'meteor/check';
 function getCustomerId(retailerId) {
   const customer = Meteor.call('customer.getCurrent', retailerId);
 
-  if (!customer) {
-    throw new Meteor.Error('AUTH', 'customer is null');
+  if (customer) {
+    // throw new Meteor.Error('AUTH', 'customer is null');
+    return customer._id;
   }
 
-  return customer._id;
+  return;
 }
 
 export default function () {

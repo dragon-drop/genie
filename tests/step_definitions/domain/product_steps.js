@@ -14,15 +14,13 @@ module.exports = function() {
    });
 
    this.When(/^I view the product with id "([^"]*)" for retailer "([^"]*)"$/, function (productId, retailerId) {
-     try {
+     const { product, wishlists, user, customer, error } = server.call('product.view', retailerId, productId);
 
-       const { product, wishlists } = server.call('product.view', retailerId, productId);
-       this.product = product;
-       this.wishlists = wishlists;
-
-     } catch (error) {
-       this.error = error;
-     }
+     this.product = product;
+     this.wishlists = wishlists;
+     this.user = user;
+     this.customer = customer;
+     this.error = error;
    });
 
     this.Then(/^I get the product with id "([^"]*)" with skus "([^"]*)" for retailer "([^"]*)"$/, function (productId, skuIdsString, retailerId) {
