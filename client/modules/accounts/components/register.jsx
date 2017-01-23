@@ -8,15 +8,18 @@ class Register extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { email, password } = event.target;
+    const { email, password, redirect } = event.target;
 
-    this.props.registerWithPassword(this.props.retailerId, email.value, password.value);
+    this.props.registerWithPassword(this.props.retailerId, email.value, password.value, redirect.value);
   }
 
   render() {
+    const { redirect } = this.props;
+
     return (
       <div>
         <form id="registerForm" onSubmit={this.handleSubmit}>
+          <input type="hidden" name="redirect" value={redirect} />
           <input placeholder="email" type="email" name="email" />
           <input placeholder="Password" type="password" name="password" />
           <button type="submit">Register</button>

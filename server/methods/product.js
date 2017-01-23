@@ -18,7 +18,9 @@ export default function () {
     'product.get'(retailerId, productId) {
       check(productId, String);
 
-      return Products.findOne({ _id: productId, retailerId });
+      const product = Products.findOne({ _id: productId, retailerId });
+
+      return product;
     },
     'product.view'(retailerId, productId) {
       check(productId, String);

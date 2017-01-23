@@ -1,4 +1,6 @@
 import React from 'react';
+import Login from '/client/modules/accounts/containers/login';
+import Register from '/client/modules/accounts/containers/register';
 
 class ShowProduct extends React.Component {
   constructor(props) {
@@ -8,7 +10,7 @@ class ShowProduct extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { skuId, wishlistId } = event.target;
+    const { skuId, wishlistId, wishlistName } = event.target;
 
     let sku;
 
@@ -18,13 +20,18 @@ class ShowProduct extends React.Component {
       }
     });
 
-    this.props.addSkuToWishlist(sku, wishlistId.value, this.props.retailerId);
+    if (wishlistId.value === 'new') {
+      this.props.addSkuToNewWishlist(this.props.retailerId, wishlistName.value, sku);
+    } else {
+      this.props.addSkuToWishlist(sku, wishlistId.value, this.props.retailerId);
+    }
   }
 
   render() {
-    const product = this.props.product;
+    console.log(this.props);
+
+    const { retailerId, product, wishlists, user, customer, error } = this.props;
     const { skus } = product;
-    const wishlists = this.props.wishlists;
 
     const formStyle = { border: 'solid 1px black' };
 
@@ -34,32 +41,48 @@ class ShowProduct extends React.Component {
 
         <p>Product id: {product._id}</p>
 
-        <form id="addSkuToWishlist" onSubmit={this.handleSubmit} style={formStyle}>
-          <h2>Add sku to wishlist</h2>
+        <div style={formStyle}>
 
-          <h3>Skus</h3>
+          <form id="addSkuToWishlist" onSubmit={this.handleSubmit}>
+            <h2>Add sku to wishlist</h2>
 
-          <ul>
-          {skus.map((sku) => (
-            <li key={sku._id} className="sku__name">
-              <input type="radio" name="skuId" value={sku._id} /> {sku._id}
-            </li>
-          ))}
-          </ul>
+            <h3>Skus</h3>
 
-          <h3>Wishlists</h3>
+            <ul>
+            {skus.map((sku) => (
+              <li key={sku._id} className="sku__name">
+                <input type="radio" name="skuId" value={sku._id} /> {sku._id}
+              </li>
+            ))}
+            </ul>
 
-          <ul>
-          {wishlists.map((wishlist) => (
-            <li key={wishlist._id} className="wishlist__name">
-              <input type="radio" name="wishlistId" value={wishlist._id} /> {wishlist.name}
-            </li>
-          ))}
-          </ul>
+            <h3>Wishlists</h3>
 
-          <button type="submit">Add</button>
+            {user &&
+              <ul>
+              {wishlists.map((wishlist) => (
+                <li key={wishlist._id} className="wishlist__name">
+                  <input type="radio" name="wishlistId" value={wishlist._id} /> {wishlist.name}
+                </li>
+              ))}
+                <li className="wishlist__name">
+                  <input type="radio" name="wishlistId" value="new" /> <input type="text" name="wishlistName" placeholder="Wishlist name" />
+                </li>
+              </ul>
+            }
 
-        </form>
+            {user && <button type="submit">Add sku to wishlist</button>}
+          </form>
+
+          {!user &&
+            <div>
+              <h4>Login or register to create a wishlist</h4>
+              <Login redirect={`/${retailerId}/products/${product._id}`}></Login>
+              <Register redirect={`/${retailerId}/products/${product._id}`}></Register>
+            </div>
+          }
+
+        </div>
       </div>
     );
   }

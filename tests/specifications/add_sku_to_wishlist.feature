@@ -23,6 +23,13 @@ Feature: Add sku to wishlist
     Then the wishlist does not contain sku id "456"
     And I am notified about a "AUTH" error
 
+  Scenario: I am logged in and creating the wishlist
+    Given I have an account with email "adam@dragondrop.uk" and password "pope-shit" for retailer "jigsaw"
+    And I am logged in
+    And there is a product with id "XYZ" with skus "123, 456" for retailer "jigsaw"
+    When I add a sku with id "456" from product "XYZ" to the new wishlist "My new list" for retailer "jigsaw"
+    Then the wishlist contains a sku with id "456" and product id "XYZ"
+
   Scenario: I try and add to wishlist without a sku
     Given I have an account with email "adam@dragondrop.uk" and password "pope-shit" for retailer "jigsaw"
     And I am logged in

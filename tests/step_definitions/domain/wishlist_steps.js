@@ -68,6 +68,24 @@ module.exports = function () {
     }
   });
 
+  this.When(/^I add a sku with id "([^"]*)" from product "([^"]*)" to the new wishlist "([^"]*)" for retailer "([^"]*)"$/, function (skuId, productId, wishlistName, retailerId) {
+    const product = server.call('product.get', retailerId, productId);
+
+    let sku;
+
+    product.skus.forEach((productSku) => {
+      if (productSku._id === skuId) {
+        sku = productSku;
+      }
+    });
+
+    try {
+      this.wishlist = server.call('wishlist.createAndAddSku', retailerId, wishlistName, sku);
+    } catch (error) {
+      this.error = error;
+    }
+  });
+
   this.When(/^I remove the wishlist$/, function () {
     try {
       server.call('wishlist.remove', this.wishlist._id);

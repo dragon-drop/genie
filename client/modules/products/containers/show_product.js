@@ -8,19 +8,24 @@ export const composer = ({ context }, onData) => {
   const productId = FlowRouter.getParam('id');
   const retailerId = FlowRouter.getParam('retailerId');
 
-  Meteor.call('product.view', retailerId, productId, (error, response) => {
-    if (error) {
-      return console.error(error);
+  Meteor.call('product.view', retailerId, productId, (callError, response) => {
+    if (callError) {
+      return console.error(callError);
     }
 
-    const { product, wishlists } = response;
+    if (response.error) {
+      console.error(response.error);
+    }
 
-    onData(null, { product, wishlists, retailerId });
+    const { product, wishlists, user, customer, error } = response;
+
+    onData(null, { product, wishlists, user, customer, error, retailerId });
   });
 };
 
 export const depsMapper = (context, actions) => ({
   addSkuToWishlist: actions.wishlist.addSkuToWishlist,
+  addSkuToNewWishlist: actions.wishlist.addSkuToNewWishlist,
   context: () => context
 });
 

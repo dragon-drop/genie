@@ -39,6 +39,22 @@ export default function () {
 
       return Wishlists.findOne(wishlistId);
     },
+    'wishlist.createAndAddSku'(retailerId, name, sku) {
+      let customer = Meteor.call('customer.getCurrent', retailerId);
+
+      if (!customer) {
+        Meteor.call('customer.create', this.userId, retailerId);
+        customer = Meteor.call('customer.getCurrent', retailerId);
+      }
+
+      const customerId = customer._id;
+
+      const wishlist = Meteor.call('wishlist.create', { name, customerId, retailerId });
+
+      Meteor.call('wishlist.addSku', wishlist._id, sku);
+
+      return wishlist
+    },
     'wishlist.addSku'(wishlistId, sku) {
       check(wishlistId, String);
       check(sku, Object);
