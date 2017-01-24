@@ -1,39 +1,26 @@
-function findSkuInCollection(testSku, collection) {
-  let skuFound = false;
-
-  const skuId = testSku._id;
-  const productId = testSku.productId;
-
-  collection.forEach((sku) => {
-    if (sku._id === skuId) {
-      skuFound = true;
-
-      expect(sku.productId).toBe(productId);
-    }
-  });
-
-  expect(skuFound).toBe(true);
-}
+import {
+  findSkuInCollection,
+  getSkuFromProduct,
+  createUserAndLogin,
+} from './support/step_utils';
 
 module.exports = function () {
   this.Given(/^a wishlist has been created for retailer "([^"]*)" with name "([^"]*)" and is owned by "([^"]*)"$/, function (retailerId, name, email) {
-    const password = "password";
-
-    const userId = server.call('users.create', {
-      email,
-      password
-    });
-
-    server.call('customer.create', userId, retailerId);
-
-    server.call('login', {
-      user: {
-        email
-      },
-      password
-    });
+    createUserAndLogin(email, "password", retailerId);
 
     this.wishlist = server.call('customer.createWishlist', name, retailerId);
+
+    server.call('logout');
+  });
+
+  this.Given(/^a wishlist has been created for retailer "([^"]*)" with name "([^"]*)" and sku "([^"]*)" from product "([^"]*)" and is owned by "([^"]*)"$/, function (retailerId, name, skuId, productId, email) {
+    createUserAndLogin(email, "password", retailerId);
+
+    const wishlist = server.call('customer.createWishlist', name, retailerId);
+
+    server.call('wishlist.addSku', wishlist._id, getSkuFromProduct(skuId, productId, retailerId))
+
+    this.wishlist = server.call('wishlist.get', wishlist._id);
 
     server.call('logout');
   });
@@ -51,36 +38,16 @@ module.exports = function () {
   this.When(/^I add a sku with id "([^"]*)" from product "([^"]*)" to the wishlist for retailer "([^"]*)"$/, function (skuId, productId, retailerId) {
     const wishlistId = typeof this.wishlist !== 'undefined' ? this.wishlist._id : undefined;
 
-    const product = server.call('product.get', retailerId, productId);
-
-    let sku;
-
-    product.skus.forEach((productSku) => {
-      if (productSku._id === skuId) {
-        sku = productSku;
-      }
-    });
-
     try {
-      server.call('wishlist.addSku', wishlistId, sku);
+      server.call('wishlist.addSku', wishlistId, getSkuFromProduct(skuId, productId, retailerId));
     } catch (error) {
       this.error = error;
     }
   });
 
   this.When(/^I add a sku with id "([^"]*)" from product "([^"]*)" to the new wishlist "([^"]*)" for retailer "([^"]*)"$/, function (skuId, productId, wishlistName, retailerId) {
-    const product = server.call('product.get', retailerId, productId);
-
-    let sku;
-
-    product.skus.forEach((productSku) => {
-      if (productSku._id === skuId) {
-        sku = productSku;
-      }
-    });
-
     try {
-      this.wishlist = server.call('wishlist.createAndAddSku', retailerId, wishlistName, sku);
+      this.wishlist = server.call('wishlist.createAndAddSku', retailerId, wishlistName, getSkuFromProduct(skuId, productId, retailerId));
     } catch (error) {
       this.error = error;
     }
@@ -108,6 +75,10 @@ module.exports = function () {
     } catch (error) {
       this.error = error;
     }
+  });
+
+  this.Given(/^the wishlist is made public$/, function () {
+    server.call('wishlist.makePublic', this.wishlist._id);
   });
 
   this.Then(/^I have a wishlist on my "([^"]*)" account with name "([^"]*)"$/, function (retailerId, name) {

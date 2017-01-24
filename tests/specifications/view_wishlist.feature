@@ -18,16 +18,21 @@ Feature: View wishlist
     Then I get the sku "456" with product id "XYZ"
     And I get the sku "789" with product id "ABC"
 
-  @focus
-  Scenario: I am logged in but don't own the wishlist
+  Scenario: I am logged in, but don't own the wishlist, and it's private
     Given I have an account with email "adam@dragondrop.uk" and password "pope-shit" for retailer "jigsaw"
     And a wishlist has been created for retailer "jigsaw" with name "Not my list" and is owned by "john@dragondrop.uk"
     And I am logged in
     When I view the wishlist
     Then I am notified about a "AUTH" error
 
-  @focus
-  Scenario: I am not logged in, and don't own the wishlist
+  Scenario: I am not logged in, and don't own the wishlist, and it's private
     Given a wishlist has been created for retailer "jigsaw" with name "Not my list" and is owned by "john@dragondrop.uk"
     When I view the wishlist
     Then I am notified about a "AUTH" error
+
+  Scenario: I am not logged in, and don't own the wishlist, but it's not private
+    Given there is a product with id "XYZ" with skus "123, 456" for retailer "jigsaw"
+    And a wishlist has been created for retailer "jigsaw" with name "Not my list" and sku "456" from product "XYZ" and is owned by "john@dragondrop.uk"
+    And the wishlist is made public
+    When I view the wishlist
+    Then I get the sku "456" with product id "XYZ"
