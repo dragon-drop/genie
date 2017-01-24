@@ -103,7 +103,11 @@ module.exports = function () {
   });
 
   this.When(/^I view the wishlist$/, function () {
-    this.viewWishlistResponse = server.call('wishlist.view', this.wishlist._id);
+    try {
+      this.viewWishlistResponse = server.call('wishlist.view', this.wishlist._id);
+    } catch (error) {
+      this.error = error;
+    }
   });
 
   this.Then(/^I have a wishlist on my "([^"]*)" account with name "([^"]*)"$/, function (retailerId, name) {

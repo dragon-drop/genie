@@ -37,7 +37,19 @@ export default function () {
     'wishlist.view'(wishlistId) {
       check(wishlistId, String);
 
-      return Wishlists.findOne(wishlistId);
+      if (!this.userId) {
+        throw new Meteor.Error('AUTH', 'user is not logged in');
+      }
+
+      const wishlist = Wishlists.findOne(wishlistId);
+
+      const customer = Meteor.call('customer.getCurrent', wishlist.retailerId);
+
+      if (!customer || customer._id !== wishlist.customerId) {
+        throw new Meteor.Error('AUTH', 'customerId is not the wishlist.customerId');
+      }
+
+      return wishlist;
     },
     'wishlist.createAndAddSku'(retailerId, name, sku) {
       let customer = Meteor.call('customer.getCurrent', retailerId);
