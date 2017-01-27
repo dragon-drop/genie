@@ -77,8 +77,8 @@ class ShowProduct extends React.Component {
           {!user &&
             <div>
               <h4>Login or register to create a wishlist</h4>
-              <Login redirect={`/${retailerId}/products/${product._id}`}></Login>
-              <Register redirect={`/${retailerId}/products/${product._id}`}></Register>
+              <Login />
+              <Register />
             </div>
           }
 

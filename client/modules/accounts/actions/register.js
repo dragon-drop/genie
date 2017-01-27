@@ -1,10 +1,8 @@
 export default {
-  registerWithPassword({ Meteor, FlowRouter, LocalState }, retailerId, email, password, redirect) {
+  registerWithPassword({ Meteor, FlowRouter, LocalState }, retailerId, email, password) {
     Accounts.createUser({
         email,
-        password
+        password,
     });
-
-    return FlowRouter.go((redirect || `/${retailerId}`) + '?loggedIn');
   },
 };

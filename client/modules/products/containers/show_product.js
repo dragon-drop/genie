@@ -7,6 +7,7 @@ export const composer = ({ context }, onData) => {
 
   const productId = FlowRouter.getParam('id');
   const retailerId = FlowRouter.getParam('retailerId');
+  const user = Meteor.user();
 
   Meteor.call('product.view', retailerId, productId, (callError, response) => {
     if (callError) {
@@ -17,8 +18,7 @@ export const composer = ({ context }, onData) => {
       console.error(response.error);
     }
 
-    const { product, wishlists, user, customer, error } = response;
-
+    const { product, wishlists, customer, error } = response;
     onData(null, { product, wishlists, user, customer, error, retailerId });
   });
 };
