@@ -1,36 +1,24 @@
 import React, { PropTypes } from 'react';
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleSubmit(event) {
+  handleClick = (event) => {
     event.preventDefault();
-    const { email, password, redirect } = event.target;
-
-    this.props.loginWithPassword(this.props.retailerId, email.value, password.value, redirect.value);
+    this.props.loginWithFacebook();
   }
 
   render() {
-    const { redirect } = this.props;
-
     return (
       <div>
-        <form id="loginForm" onSubmit={this.handleSubmit}>
-          <input type="hidden" name="redirect" value={redirect} />
-          <input placeholder="email" type="email" name="email" />
-          <input placeholder="Password" type="password" name="password" />
-          <button type="submit">Login</button>
-        </form>
+        <h4>Login or register to create a wishlist</h4>
+        <button onClick={this.handleClick}>Login with facebook</button>
+        <span> to continue with your wishlist or create an account. </span>
       </div>
     );
   }
 }
 
 Login.propTypes = {
-  loginWithPassword: PropTypes.func.isRequired,
+  loginWithFacebook: PropTypes.func.isRequired,
 };
 
 export default Login;

@@ -1,0 +1,8 @@
+{
+  "services": {
+    "facebook": {
+      "appId": "1229859453730646",
+      "secret": "b47d076c4122e9047b515e11fb752d02"
+    }
+  }
+}

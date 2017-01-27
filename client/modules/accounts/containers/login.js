@@ -12,6 +12,7 @@ export const composer = ({ context }, onData) => {
 
 export const depsMapper = (context, actions) => ({
   loginWithPassword: actions.login.loginWithPassword,
+  loginWithFacebook: actions.login.loginWithFacebook,
   context: () => context,
 });
 

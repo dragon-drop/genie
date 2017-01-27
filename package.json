@@ -3,16 +3,14 @@
   "version": "0.1.0",
   "description": "genie",
   "scripts": {
-    "start": "meteor",
+    "start": "meteor --settings development.settings.json",
     "test": "npm run at && npm run ut",
     "at": "chimp .config/chimp.js --ddp=http://localhost:3000 --watch",
     "at-all": "chimp .config/chimp.js --ddp=http://localhost:3000 --test",
     "ut-only": "meteor test --driver-package practicalmeteor:mocha",
     "ut": "meteor test --driver-package practicalmeteor:mocha --port 4000",
-
     "lint": "eslint ./libs ./client ./server --ext .js --ext .jsx",
     "lintfix": "npm run lint -- --fix"
-
   },
   "repository": {
     "type": "git",
@@ -21,6 +19,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "mantra-core": "^1.2.0",
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
@@ -48,6 +47,5 @@
     "react-addons-test-utils": "^15.0.0",
     "sinon": "1.17.x",
     "xolvio-jasmine-expect": "^1.0.0"
-
   }
 }
