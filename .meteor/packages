@@ -25,3 +25,5 @@ reactive-dict
 xolvio:backdoor
 xolvio:cleaner
 accounts-password
+accounts-facebook
+service-configuration

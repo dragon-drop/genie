@@ -3,6 +3,7 @@ import customer from './customer';
 import wishlist from './wishlist';
 import product from './product';
 import retailer from './retailer';
+import accounts from './accounts';
 
 export default function () {
   users();
@@ -10,4 +11,5 @@ export default function () {
   wishlist();
   product();
   retailer();
+  accounts();
 }

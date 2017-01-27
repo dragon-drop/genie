@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "genie",
   "scripts": {
-    "start": "meteor",
+    "start": "meteor --settings development.settings.json",
     "test": "npm run at && npm run ut",
     "at": "chimp .config/chimp.js --ddp=http://localhost:3000 --watch",
     "at-all": "chimp .config/chimp.js --ddp=http://localhost:3000 --test",

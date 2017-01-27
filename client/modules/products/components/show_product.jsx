@@ -1,6 +1,5 @@
 import React from 'react';
-import Login from '/client/modules/accounts/containers/login';
-import Register from '/client/modules/accounts/containers/register';
+import Auth from '/client/modules/accounts/containers/auth';
 
 class ShowProduct extends React.Component {
   constructor(props) {
@@ -56,31 +55,23 @@ class ShowProduct extends React.Component {
             ))}
             </ul>
 
-            <h3>Wishlists</h3>
+            <Auth>
+              <h3>Wishlists</h3>
 
-            {user &&
               <ul>
-              {wishlists.map((wishlist) => (
-                <li key={wishlist._id} className="wishlist__name">
-                  <input type="radio" name="wishlistId" value={wishlist._id} /> {wishlist.name}
-                </li>
-              ))}
-                <li className="wishlist__name">
-                  <input type="radio" name="wishlistId" value="new" /> <input type="text" name="wishlistName" placeholder="Wishlist name" />
-                </li>
-              </ul>
-            }
+                {wishlists.map((wishlist) => (
+                  <li key={wishlist._id} className="wishlist__name">
+                    <input type="radio" name="wishlistId" value={wishlist._id} /> {wishlist.name}
+                  </li>
+                  ))}
+                  <li className="wishlist__name">
+                    <input type="radio" name="wishlistId" value="new" /> <input type="text" name="wishlistName" placeholder="Wishlist name" />
+                  </li>
+                </ul>
 
-            {user && <button type="submit">Add sku to wishlist</button>}
+                <button type="submit">Add sku to wishlist</button>
+              </Auth>
           </form>
-
-          {!user &&
-            <div>
-              <h4>Login or register to create a wishlist</h4>
-              <Login />
-              <Register />
-            </div>
-          }
 
         </div>
       </div>
