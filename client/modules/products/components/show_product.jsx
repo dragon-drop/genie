@@ -36,7 +36,7 @@ class ShowProduct extends React.Component {
 
     return (
       <div>
-        <h1>Show product</h1>
+        <h1>{product.name}</h1>
 
         <p>Product id: {product._id}</p>
 
@@ -50,7 +50,9 @@ class ShowProduct extends React.Component {
             <ul>
             {skus.map((sku) => (
               <li key={sku._id} className="sku__name">
-                <input type="radio" name="skuId" value={sku._id} /> {sku._id}
+                <label>
+                  <input type="radio" name="skuId" value={sku._id} /> {sku._id}
+                </label>
               </li>
             ))}
             </ul>
@@ -61,11 +63,15 @@ class ShowProduct extends React.Component {
               <ul>
                 {wishlists.map((wishlist) => (
                   <li key={wishlist._id} className="wishlist__name">
-                    <input type="radio" name="wishlistId" value={wishlist._id} /> {wishlist.name}
+                    <label>
+                      <input type="radio" name="wishlistId" value={wishlist._id} /> {wishlist.name}
+                    </label>
                   </li>
                   ))}
                   <li className="wishlist__name">
-                    <input type="radio" name="wishlistId" value="new" /> <input type="text" name="wishlistName" placeholder="Wishlist name" />
+                    <label>
+                      <input type="radio" name="wishlistId" value="new" /> <input type="text" name="wishlistName" placeholder="Wishlist name" />
+                    </label>
                   </li>
                 </ul>
 

@@ -48,12 +48,12 @@ class ShowWishlist extends React.Component {
               </p>
             )}
 
-            <h2>Skus</h2>
+            <h2>Products</h2>
 
             <ul>
             {skus.map((sku) => (
               <li key={sku._id} className="sku__name">
-                {sku._id}, from product {sku.productId}
+                <a target="_blank" href={sku.product_url}>{sku.name} (variant {sku._id})</a>
                 <form onSubmit={this.removeSku}>
                   <input type="hidden" name="skuId" defaultValue={sku._id} />
                   <button>Remove</button>
