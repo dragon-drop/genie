@@ -78,7 +78,7 @@ module.exports = function () {
   });
 
   this.Given(/^the wishlist is made public$/, function () {
-    server.call('wishlist.makePublic', this.wishlist._id);
+    server.call('wishlist.makePrivate', this.wishlist._id, false);
   });
 
   this.Then(/^I have a wishlist on my "([^"]*)" account with name "([^"]*)"$/, function (retailerId, name) {

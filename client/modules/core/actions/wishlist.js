@@ -29,5 +29,13 @@ export default {
         return FlowRouter.go(`/${retailerId}/wishlists/${wishlist._id}`);
       })
     },
+    makePrivate({Meteor, FlowRouter, LocalState}, wishlistId, isPrivate) {
+      Meteor.call('wishlist.makePrivate', wishlistId, isPrivate, (error, wishlist) => {
+        if(error) {
+          console.error(error);
+          return LocalState.set('ERROR', error.reason);
+        }
+      })
+    },
 
 }

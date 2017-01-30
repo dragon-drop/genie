@@ -8,17 +8,33 @@ export const composer = ({context}, onData) => {
   const wishlistId = FlowRouter.getParam('id');
   const retailerId = FlowRouter.getParam('retailerId');
 
-  Meteor.call('wishlist.view', wishlistId, (error, wishlist) => {
-    if (error) {
-      return console.error(error);
-    }
+  const userId = Meteor.userId();
+  console.log({userId});
 
-    onData(null, { wishlist, retailerId });
-  });
+  if (Meteor.subscribe('wishlist', wishlistId).ready()) {
+    const wishlist = Collections.Wishlists.findOne(wishlistId);
+
+    console.log({wishlist});
+
+    if (Meteor.subscribe('customer', retailerId, userId).ready()) {
+      const currentCustomer = Collections.Customers.findOne({ retailerId, userId });
+
+      console.log({ retailerId, userId, currentCustomer });
+
+      if (!currentCustomer) {
+        Meteor.logout();
+      }
+
+      const isOwner = currentCustomer && (currentCustomer._id  === wishlist.customerId);
+
+      onData(null, { wishlist, retailerId, currentCustomer, isOwner });
+    }
+  }
 };
 
 export const depsMapper = (context, actions) => ({
-  context: () => context
+  context: () => context,
+  makePrivate: actions.wishlist.makePrivate,
 });
 
 export default composeAll(

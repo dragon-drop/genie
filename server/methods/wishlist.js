@@ -13,7 +13,7 @@ export default function () {
         name,
         customerId,
         retailerId,
-        // 'private': true,
+        'private': true,
         skus: [],
       });
 
@@ -91,12 +91,12 @@ export default function () {
         }
       });
     },
-    'wishlist.makePublic'(wishlistId) {
+    'wishlist.makePrivate'(wishlistId, isPrivate) {
       return Wishlists.update({
         _id: wishlistId,
       }, {
         $set: {
-          private: false
+          private: isPrivate
         }
       });
     }

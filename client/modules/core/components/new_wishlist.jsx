@@ -1,12 +1,7 @@
 import React from 'react';
 
 class NewWishlist extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     event.preventDefault();
     const { name } = event.target;
 

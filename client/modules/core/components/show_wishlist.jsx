@@ -1,31 +1,58 @@
 import React from 'react';
 
 class ShowWishlist extends React.Component {
-  constructor(props) {
-    super(props);
+  handleCheckboxChange = (event) => {
+    event.preventDefault();
+    const checkbox = event.target;
+
+    this.props.makePrivate(this.props.wishlist._id, checkbox.checked);
   }
 
   render() {
-    const { wishlist, retailerId } = this.props;
+    const { wishlist, retailerId, isOwner } = this.props;
     const { skus } = wishlist;
+
+    const canViewWishlist = isOwner || !wishlist.private;
 
     return (
       <div>
-        <a href={`/${retailerId}/wishlists`}>My Wishlists</a> / <span>{wishlist.name}</span>
 
-        <h1>{wishlist.name}</h1>
+        {!canViewWishlist && <p>This is a private wishlist</p>}
 
-        <p>Wishlist id: {wishlist._id}</p>
+        {canViewWishlist && (
+          <div>
+            <a href={`/${retailerId}/wishlists`}>My Wishlists</a> / <span>{wishlist.name}</span>
 
-        <h2>Skus</h2>
+            <h1>{wishlist.name}</h1>
 
-        <ul>
-        {skus.map((sku) => (
-          <li key={sku._id} className="sku__name">
-            {sku._id}, from product {sku.productId}
-          </li>
-        ))}
-        </ul>
+            <p>Wishlist id: {wishlist._id}</p>
+
+            {isOwner && (
+              <p>
+                Private wishlist:
+                <input type="checkbox" name="private" value="true" checked={wishlist.private} onChange={this.handleCheckboxChange} />
+              </p>
+            )}
+
+            {!wishlist.private && (
+              <p>
+                Share this wishlist with this URL:
+                <input type="text" value={window.location.href} style={{ "width": "300px" }} />
+              </p>
+            )}
+
+            <h2>Skus</h2>
+
+            <ul>
+            {skus.map((sku) => (
+              <li key={sku._id} className="sku__name">
+                {sku._id}, from product {sku.productId}
+              </li>
+            ))}
+            </ul>
+          </div>
+        )}
+
       </div>
     );
   }

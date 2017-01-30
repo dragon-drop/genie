@@ -30,7 +30,6 @@ class ShowRetailer extends React.Component {
         {!userId &&
           <div>
             <Login></Login>
-            <Register></Register>
           </div>
         }
       </div>
