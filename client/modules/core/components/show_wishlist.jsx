@@ -8,6 +8,13 @@ class ShowWishlist extends React.Component {
     this.props.makePrivate(this.props.wishlist._id, checkbox.checked);
   }
 
+  removeSku = (event) => {
+    event.preventDefault();
+    const { skuId } = event.target;
+
+    this.props.removeSku(this.props.wishlist._id, skuId.value);
+  }
+
   render() {
     const { wishlist, retailerId, isOwner } = this.props;
     const { skus } = wishlist;
@@ -37,7 +44,7 @@ class ShowWishlist extends React.Component {
             {!wishlist.private && (
               <p>
                 Share this wishlist with this URL:
-                <input type="text" value={window.location.href} style={{ "width": "300px" }} />
+                <input type="text" defaultValue={window.location.href} style={{ "width": "300px" }} />
               </p>
             )}
 
@@ -47,6 +54,10 @@ class ShowWishlist extends React.Component {
             {skus.map((sku) => (
               <li key={sku._id} className="sku__name">
                 {sku._id}, from product {sku.productId}
+                <form onSubmit={this.removeSku}>
+                  <input type="hidden" name="skuId" defaultValue={sku._id} />
+                  <button>Remove</button>
+                </form>
               </li>
             ))}
             </ul>

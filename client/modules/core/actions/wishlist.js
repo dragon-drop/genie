@@ -29,6 +29,14 @@ export default {
         return FlowRouter.go(`/${retailerId}/wishlists/${wishlist._id}`);
       })
     },
+    removeSku({Meteor, FlowRouter, LocalState}, wishlistId, skuId) {
+      Meteor.call('wishlist.removeSku', wishlistId, skuId, (error, wishlist) => {
+        if(error) {
+          console.error(error);
+          return LocalState.set('ERROR', error.reason);
+        }
+      })
+    },
     makePrivate({Meteor, FlowRouter, LocalState}, wishlistId, isPrivate) {
       Meteor.call('wishlist.makePrivate', wishlistId, isPrivate, (error, wishlist) => {
         if(error) {

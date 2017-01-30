@@ -25,7 +25,14 @@ Feature: View wishlist
 
   Scenario: I don't own the wishlist, and it's not private
     Given there is a product with id "XYZ" with skus "123, 456" for retailer "jigsaw"
-    And a wishlist has been created for retailer "jigsaw" with name "Not my list" and sku "456" from product "XYZ" and is owned by "john@dragondrop.uk"
-    And the wishlist is made public
+    And a "public" wishlist has been created for retailer "jigsaw" with name "Not my list" and sku "456" from product "XYZ" and is owned by "john@dragondrop.uk"
     When I view the wishlist
     Then I get the sku "456" with product id "XYZ"
+
+  Scenario: I don't own the wishlist, and it's not private, and I try and change the visibility
+    Given there is a product with id "XYZ" with skus "123, 456" for retailer "jigsaw"
+    And a "public" wishlist has been created for retailer "jigsaw" with name "Not my list" and sku "456" from product "XYZ" and is owned by "john@dragondrop.uk"
+    And I view the wishlist
+    When I set the wishlist privacy to "private"
+    Then I am notified about a "AUTH" error
+

@@ -13,12 +13,14 @@ module.exports = function () {
     server.call('logout');
   });
 
-  this.Given(/^a wishlist has been created for retailer "([^"]*)" with name "([^"]*)" and sku "([^"]*)" from product "([^"]*)" and is owned by "([^"]*)"$/, function (retailerId, name, skuId, productId, email) {
+  this.Given(/^a "([^"]*)" wishlist has been created for retailer "([^"]*)" with name "([^"]*)" and sku "([^"]*)" from product "([^"]*)" and is owned by "([^"]*)"$/, function (publicOrPrivate, retailerId, name, skuId, productId, email) {
     createUserAndLogin(email, "password", retailerId);
 
     const wishlist = server.call('customer.createWishlist', name, retailerId);
 
     server.call('wishlist.addSku', wishlist._id, getSkuFromProduct(skuId, productId, retailerId))
+
+    server.call('wishlist.makePrivate', wishlist._id, publicOrPrivate === 'private');
 
     this.wishlist = server.call('wishlist.get', wishlist._id);
 
@@ -77,9 +79,22 @@ module.exports = function () {
     }
   });
 
-  this.Given(/^the wishlist is made public$/, function () {
-    server.call('wishlist.makePrivate', this.wishlist._id, false);
+  this.When(/^I set the wishlist privacy to "([^"]*)"$/, function (publicOrPrivate) {
+    try {
+      server.call('wishlist.makePrivate', this.wishlist._id, publicOrPrivate === 'private');
+    } catch (error) {
+      this.error = error;
+    }
   });
+
+  this.When(/^I remove sku "([^"]*)" from the wishlist$/, function (skuId) {
+    try {
+      server.call('wishlist.removeSku', this.wishlist._id, skuId);
+    } catch (error) {
+      this.error = error;
+    }
+  });
+
 
   this.Then(/^I have a wishlist on my "([^"]*)" account with name "([^"]*)"$/, function (retailerId, name) {
     const customer = server.call('customer.getCurrent', retailerId);

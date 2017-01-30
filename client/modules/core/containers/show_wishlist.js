@@ -35,6 +35,7 @@ export const composer = ({context}, onData) => {
 export const depsMapper = (context, actions) => ({
   context: () => context,
   makePrivate: actions.wishlist.makePrivate,
+  removeSku: actions.wishlist.removeSku,
 });
 
 export default composeAll(

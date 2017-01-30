@@ -91,7 +91,38 @@ export default function () {
         }
       });
     },
+    'wishlist.removeSku'(wishlistId, skuId) {
+      check(wishlistId, String);
+      check(skuId, String);
+
+      const wishlist = Wishlists.findOne(wishlistId);
+
+      const customer = Meteor.call('customer.getCurrent', wishlist.retailerId);
+
+      if (!customer || customer._id !== wishlist.customerId) {
+        throw new Meteor.Error('AUTH', 'customerId is not the wishlist.customerId');
+      }
+
+      return Wishlists.update({
+        _id: wishlistId,
+      }, {
+        $pull: {
+          skus: { _id: skuId}
+        }
+      });
+    },
     'wishlist.makePrivate'(wishlistId, isPrivate) {
+      check(wishlistId, String);
+      check(isPrivate, Boolean);
+
+      const wishlist = Wishlists.findOne(wishlistId);
+
+      const customer = Meteor.call('customer.getCurrent', wishlist.retailerId);
+
+      if (!customer || customer._id !== wishlist.customerId) {
+        throw new Meteor.Error('AUTH', 'customerId is not the wishlist.customerId');
+      }
+
       return Wishlists.update({
         _id: wishlistId,
       }, {
