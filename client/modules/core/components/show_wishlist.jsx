@@ -41,7 +41,7 @@ class ShowWishlist extends React.Component {
               </p>
             )}
 
-            {!wishlist.private && (
+            {!wishlist.private && isOwner && (
               <p>
                 Share this wishlist with this URL:
                 <input type="text" defaultValue={window.location.href} style={{ "width": "300px" }} />
@@ -54,10 +54,12 @@ class ShowWishlist extends React.Component {
             {skus.map((sku) => (
               <li key={sku._id} className="sku__name">
                 <a target="_blank" href={sku.product_url}>{sku.name} (variant {sku._id})</a>
-                <form onSubmit={this.removeSku}>
-                  <input type="hidden" name="skuId" defaultValue={sku._id} />
-                  <button>Remove</button>
-                </form>
+                {isOwner && (
+                  <form onSubmit={this.removeSku}>
+                    <input type="hidden" name="skuId" defaultValue={sku._id} />
+                    <button>Remove</button>
+                  </form>
+                )}
               </li>
             ))}
             </ul>
