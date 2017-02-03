@@ -31,6 +31,10 @@ export default function () {
 
       const customerId = getCustomerId(retailerId);
 
+      if (!customerId) {
+        throw new Meteor.Error('AUTH', 'customerId is null');
+      }
+
       return Meteor.call('wishlist.create', { name, customerId, retailerId });
     },
     'customer.getWishlist'(wishlistId, retailerId) {

@@ -1,4 +1,4 @@
-Feature: Delete sku from wishlist
+Feature: Remove sku from wishlist
   As a
   I want to
   So that
@@ -6,7 +6,6 @@ Feature: Delete sku from wishlist
   Background:
     Given there is a retailer with name "Jigsaw Online" and id "jigsaw"
 
-  @focus
   Scenario: I am logged in as the owner of the wishlist
     Given I have an account with email "adam@dragondrop.uk" and password "password" for retailer "jigsaw"
     And I am logged in

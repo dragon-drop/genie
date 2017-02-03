@@ -9,17 +9,12 @@ export const composer = ({context}, onData) => {
   const retailerId = FlowRouter.getParam('retailerId');
 
   const userId = Meteor.userId();
-  console.log({userId});
 
   if (Meteor.subscribe('wishlist', wishlistId).ready()) {
     const wishlist = Collections.Wishlists.findOne(wishlistId);
 
-    console.log({wishlist});
-
     if (Meteor.subscribe('customer', retailerId, userId).ready()) {
       const currentCustomer = Collections.Customers.findOne({ retailerId, userId });
-
-      console.log({ retailerId, userId, currentCustomer });
 
       if (!currentCustomer) {
         Meteor.logout();
@@ -36,6 +31,7 @@ export const depsMapper = (context, actions) => ({
   context: () => context,
   makePrivate: actions.wishlist.makePrivate,
   removeSku: actions.wishlist.removeSku,
+  removeWishlist: actions.wishlist.removeWishlist,
 });
 
 export default composeAll(

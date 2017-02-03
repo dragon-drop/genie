@@ -15,6 +15,12 @@ class ShowWishlist extends React.Component {
     this.props.removeSku(this.props.wishlist._id, skuId.value);
   }
 
+  removeWishlist = (event) => {
+    event.preventDefault();
+
+    this.props.removeWishlist(this.props.wishlist._id, this.props.retailerId);
+  }
+
   render() {
     const { wishlist, retailerId, isOwner } = this.props;
     const { skus } = wishlist;
@@ -33,6 +39,10 @@ class ShowWishlist extends React.Component {
             <h1>{wishlist.name}</h1>
 
             <p>Wishlist id: {wishlist._id}</p>
+
+            <form onSubmit={this.removeWishlist}>
+              <button>Remove wishlist</button>
+            </form>
 
             {isOwner && (
               <p>

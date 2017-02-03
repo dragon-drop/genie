@@ -37,6 +37,16 @@ export default {
         }
       })
     },
+    removeWishlist({Meteor, FlowRouter, LocalState}, wishlistId, retailerId, skuId) {
+      Meteor.call('wishlist.remove', wishlistId, (error) => {
+        if(error) {
+          console.error(error);
+          return LocalState.set('ERROR', error.reason);
+        }
+
+        return FlowRouter.go(`/${retailerId}/wishlists/`);
+      })
+    },
     makePrivate({Meteor, FlowRouter, LocalState}, wishlistId, isPrivate) {
       Meteor.call('wishlist.makePrivate', wishlistId, isPrivate, (error, wishlist) => {
         if(error) {

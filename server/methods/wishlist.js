@@ -24,8 +24,14 @@ export default function () {
 
       const wishlist = Wishlists.findOne(wishlistId);
 
-      if (this.userId !== wishlist.customerId) {
-        throw new Meteor.Error('AUTH', 'this.userId is not the wishlist.customerId');
+      if (!this.userId) {
+        throw new Meteor.Error('AUTH', 'user is not logged in');
+      }
+
+      const customer = Meteor.call('customer.getCurrent', wishlist.retailerId);
+
+      if (!customer || customer._id !== wishlist.customerId) {
+        throw new Meteor.Error('AUTH', 'customerId is not the wishlist.customerId');
       }
 
       Wishlists.remove(wishlistId);
