@@ -95,14 +95,23 @@ module.exports = function () {
     }
   });
 
+  this.When(/^I rename the wishlist to "([^"]*)"$/, function (name) {
+    try {
+      server.call('wishlist.rename', this.wishlist._id, name);
+    } catch (error) {
+      this.error = error;
+    }
+  });
 
   this.Then(/^I have a wishlist on my "([^"]*)" account with name "([^"]*)"$/, function (retailerId, name) {
     const customer = server.call('customer.getCurrent', retailerId);
     const customerId = customer._id;
 
-    expect(this.wishlist.customerId).toBe(customerId);
-    expect(this.wishlist.name).toBe(name);
-    expect(this.wishlist.retailerId).toBe(retailerId);
+    const wishlist = server.call('wishlist.get', this.wishlist._id);
+
+    expect(wishlist.customerId).toBe(customerId);
+    expect(wishlist.name).toBe(name);
+    expect(wishlist.retailerId).toBe(retailerId);
   });
 
   this.Then(/^I do not have a wishlist on my "([^"]*)" account with name "([^"]*)"$/, function (retailerId, name) {

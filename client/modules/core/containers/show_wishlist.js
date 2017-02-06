@@ -32,6 +32,7 @@ export const depsMapper = (context, actions) => ({
   makePrivate: actions.wishlist.makePrivate,
   removeSku: actions.wishlist.removeSku,
   removeWishlist: actions.wishlist.removeWishlist,
+  renameWishlist: actions.wishlist.renameWishlist,
 });
 
 export default composeAll(

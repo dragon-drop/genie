@@ -14,6 +14,7 @@ export const composer = ({context, clearErrors}, onData) => {
 
   clearTimeout(notificationTimeout);
   notificationTimeout = setTimeout(clearErrors, 10000);
+  // clearErrors();
 };
 
 export const depsMapper = (context, actions) => ({

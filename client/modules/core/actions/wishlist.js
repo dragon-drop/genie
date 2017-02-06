@@ -59,6 +59,16 @@ export default {
         return FlowRouter.go(`/${retailerId}/wishlists/`);
       })
     },
+    renameWishlist({Meteor, FlowRouter, LocalState}, wishlistId, name) {
+      Meteor.call('wishlist.rename', wishlistId, name, (error) => {
+        if(error) {
+          console.error(error);
+          return LocalState.set('ERROR', notifications.error[error.error]);
+        }
+
+        LocalState.set('SUCCESS', notifications.wishlist.updated);
+      })
+    },
     makePrivate({Meteor, FlowRouter, LocalState}, wishlistId, isPrivate) {
       Meteor.call('wishlist.makePrivate', wishlistId, isPrivate, (error, wishlist) => {
         if(error) {

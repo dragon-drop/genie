@@ -5,6 +5,7 @@ export default {
   wishlist: {
     created: 'Wishlist created!',
     removed: 'Wishlist removed.',
+    updated: 'Wishlist updated!',
     privacyChanged: 'Wishlist privacy changed.',
   },
   sku: {

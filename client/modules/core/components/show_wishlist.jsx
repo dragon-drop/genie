@@ -21,11 +21,20 @@ class ShowWishlist extends React.Component {
     this.props.removeWishlist(this.props.wishlist._id, this.props.retailerId);
   }
 
+  renameWishlist = (event) => {
+    event.preventDefault();
+    const { name } = event.target;
+
+    this.props.renameWishlist(this.props.wishlist._id, name.value);
+  }
+
   render() {
     const { wishlist, retailerId, isOwner } = this.props;
     const { skus } = wishlist;
 
     const canViewWishlist = isOwner || !wishlist.private;
+
+    const headingStyle = {font: 'inherit'};
 
     return (
       <div>
@@ -36,7 +45,15 @@ class ShowWishlist extends React.Component {
           <div>
             <a href={`/${retailerId}/wishlists`}>My Wishlists</a> / <span>{wishlist.name}</span>
 
-            <h1>{wishlist.name}</h1>
+            {isOwner && (
+              <form onSubmit={this.renameWishlist}>
+                <h1><input name="name" defaultValue={wishlist.name} style={headingStyle} /><button>Save</button></h1>
+              </form>
+            )}
+
+            {!isOwner && (
+              <h1>{wishlist.name}</h1>
+            )}
 
             <p>Wishlist id: {wishlist._id}</p>
 

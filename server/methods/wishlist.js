@@ -41,6 +41,26 @@ export default function () {
 
       return Wishlists.findOne(wishlistId);
     },
+    'wishlist.rename'(wishlistId, name) {
+      check(wishlistId, String);
+      check(name, String);
+
+      const wishlist = Wishlists.findOne(wishlistId);
+
+      const customer = Meteor.call('customer.getCurrent', wishlist.retailerId);
+
+      if (!customer || customer._id !== wishlist.customerId) {
+        throw new Meteor.Error('AUTH', 'customerId is not the wishlist.customerId');
+      }
+
+      return Wishlists.update({
+        _id: wishlistId,
+      }, {
+        $set: {
+          name
+        }
+      });
+    },
     'wishlist.view'(wishlistId) {
       check(wishlistId, String);
 
