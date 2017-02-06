@@ -40,15 +40,17 @@ class ShowWishlist extends React.Component {
 
             <p>Wishlist id: {wishlist._id}</p>
 
-            <form onSubmit={this.removeWishlist}>
-              <button>Remove wishlist</button>
-            </form>
-
             {isOwner && (
-              <p>
-                Private wishlist:
-                <input type="checkbox" name="private" value="true" checked={wishlist.private} onChange={this.handleCheckboxChange} />
-              </p>
+              <div>
+                <form onSubmit={this.removeWishlist}>
+                  <button>Remove wishlist</button>
+                </form>
+
+                <p>
+                  Private wishlist:
+                  <input type="checkbox" name="private" value="true" checked={wishlist.private} onChange={this.handleCheckboxChange} />
+                </p>
+              </div>
             )}
 
             {!wishlist.private && isOwner && (

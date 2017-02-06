@@ -1,3 +1,5 @@
+import notifications from '/client/notifications';
+
 export default {
   loginWithPassword({ Meteor, FlowRouter, LocalState }, retailerId, email, password) {
     Meteor.loginWithPassword(email, password, (error) => {
@@ -23,10 +25,12 @@ export default {
               return LocalState.set('ERROR', error.reason);
             }
 
+            LocalState.set('SUCCESS', notifications.account.loggedIn);
             console.info('created new customer');
           });
         } else {
-          console.info('customer already sexists');
+          LocalState.set('SUCCESS', notifications.account.loggedIn);
+          console.info('customer already exists');
         }
       });
     });
